@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather!</title>
+    <style>
+        body,title {
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+       
+    </style>
+</head>
+<body>
+
+    <h1>Weather!</h1>
+
+    <div id="weather-info">
+        <!-- Weather information will be displayed here -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Replace 'YOUR_API_KEY' with your actual Visual Crossing Weather API key
+            const apiKey = 'KX3P7VAXKFRSAPXYBDY8TQ3B9';
+            // Replace 'YOUR_LOCATION' with the location for which you want the weather information
+            const location = 'Monterrey';
+            const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${apiKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the relevant weather information from the data
+                    const currentConditions = data.currentConditions;
+
+                    // Update the HTML with the weather information
+                    const weatherInfoDiv = document.getElementById('weather-info');
+                    weatherInfoDiv.innerHTML = `
+                        <p><strong>Location:</strong> ${location}</p>
+                        <p><strong>Temperature:</strong> ${currentConditions.temp}</p>
+                        <p><strong>Conditions:</strong> ${currentConditions.conditions}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>
